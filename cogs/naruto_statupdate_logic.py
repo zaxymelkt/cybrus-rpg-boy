@@ -95,8 +95,20 @@ class StatUpdate(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self, interaction: Interaction):
+        # Get the list of guilds the bot is a member of
+        guilds = self.bot.guilds
+
+        # Assuming you want to access the first guild in the list (you can modify this as needed)
+        if guilds:
+            first_guild = guilds[0]  # You can choose the guild you want here
+            guild_id = first_guild.id
+            print(f"Bot is connected to guild with ID: {guild_id}")
+
+            # Now you can use guild_id in your database connection string or any other operations
+        else:
+            print("Bot is not a member of any guilds.")
         # Connect to the database and create reward_logs table if it doesn't exist
-        db = sqlite3.connect(f"database/serverid-{interaction.guild.id}_database.db")
+        db = sqlite3.connect(f"database/serverid-{guild_id}_database.db")
         cursor = db.cursor()
 
         cursor.execute("""
