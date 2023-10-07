@@ -11,20 +11,6 @@ class StatUpdate(commands.Cog):
     @nextcord.slash_command(name='stat', description='Update your stats.')
     async def stat(self, interaction: nextcord.Interaction, action: str):
         if action == "update":
-            db = sqlite3.connect(f"database/serverid-{interaction.guild.id}_database.db")
-            cursor = db.cursor()
-
-            cursor.execute("""
-                            CREATE TABLE IF NOT EXISTS reward_logs (
-                                staff_id INTEGER,
-                                participants TEXT,
-                                point_rewards INTEGER,
-                                event_link TEXT
-                            )
-                            """)
-
-            db.commit()
-            db.close()
             await self.show_stat_menu(interaction)
 
     async def show_stat_menu(self, interaction):

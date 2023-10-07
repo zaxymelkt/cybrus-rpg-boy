@@ -26,6 +26,7 @@ class NarutoBotJoin(commands.Cog):
         self.create_statistical_info_table()
         self.create_jutsu_catalogue_table()
         self.create_promotional_rules_table()
+        self.create_point_log()
 
         print(f'Bot joined guild: {guild.name}')
 
@@ -37,6 +38,17 @@ class NarutoBotJoin(commands.Cog):
             print(f'Connected to SQLite database: {db_name}')
         except sqlite3.Error as err:
             print(f'Error connecting to database: {err}')
+
+    def create_point_log(self):
+        cursor = self.db_connection.cursor()
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS reward_logs (
+                                staff_id INTEGER,
+                                participants TEXT,
+                                point_rewards INTEGER,
+                                event_link TEXT)
+        ''')
+        cursor.close()
 
     def create_personal_info_table(self):
         cursor = self.db_connection.cursor()
