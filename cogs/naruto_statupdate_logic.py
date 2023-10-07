@@ -104,24 +104,25 @@ class StatUpdate(commands.Cog):
             guild_id = first_guild.id
             print(f"Bot is connected to guild with ID: {guild_id}")
 
+            # Connect to the database and create reward_logs table if it doesn't exist
+            db = sqlite3.connect(f"database/serverid-{guild_id}_database.db")
+            cursor = db.cursor()
+
+            cursor.execute("""
+                        CREATE TABLE IF NOT EXISTS reward_logs (
+                            staff_id INTEGER,
+                            participants TEXT,
+                            point_rewards INTEGER,
+                            event_link TEXT
+                        )
+                        """)
+
+            db.commit()
+            db.close()
+
             # Now you can use guild_id in your database connection string or any other operations
         else:
             print("Bot is not a member of any guilds.")
-        # Connect to the database and create reward_logs table if it doesn't exist
-        db = sqlite3.connect(f"database/serverid-{guild_id}_database.db")
-        cursor = db.cursor()
-
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS reward_logs (
-                staff_id INTEGER,
-                participants TEXT,
-                point_rewards INTEGER,
-                event_link TEXT
-            )
-            """)
-
-        db.commit()
-        db.close()
 
 
 class StatUpdateView(nextcord.ui.View):
