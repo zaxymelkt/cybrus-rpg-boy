@@ -1,4 +1,5 @@
 import nextcord
+from nextcord import Interaction
 from nextcord.ext import commands
 import sqlite3
 
@@ -93,9 +94,9 @@ class StatUpdate(commands.Cog):
                                    ephemeral=True)
 
     @commands.Cog.listener()
-    async def on_ready(self):
+    async def on_ready(self, interaction: Interaction):
         # Connect to the database and create reward_logs table if it doesn't exist
-        db = sqlite3.connect(f"database/serverid-{nextcord.Interaction.guild_id}_database.db")
+        db = sqlite3.connect(f"database/serverid-{interaction.guild.id}_database.db")
         cursor = db.cursor()
 
         cursor.execute("""

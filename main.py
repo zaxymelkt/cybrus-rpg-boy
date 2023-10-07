@@ -19,6 +19,8 @@ bot.load_extension('cogs.naruto_statupdate_logic')
 @bot.event
 async def on_ready():
     print(f'Logged in as {bot.user.name}')
+    print('it worked')
+
 
 
 bot.run('MTE0NDgwMTExMDU1NzcyODc4OA.GtBQQq.O64tl5hvvZjJ7uSxaEPKitxMy2nxrCYetuYPfc')
