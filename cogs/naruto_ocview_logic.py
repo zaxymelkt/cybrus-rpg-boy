@@ -7,14 +7,14 @@ class NarutoOCViewLogic(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.Cog.listener()
+    async def on_ready(self):
+        print("NarutoOcViewLogic cog is ready!")
+
     # Define the /oc command to display the character sheet
-    @nextcord.slash_command(
-        name='oc',
-        description='View your character sheet.'
-    )
+    @nextcord.slash_command(name='viewoc', description='View your character sheet.')
     async def view_character_sheet(self, interaction: nextcord.Interaction):
         user_id = interaction.user.id
-
         # Connect to the database
         db = sqlite3.connect(f"database/serverid-{interaction.guild.id}_database.db")
         cursor = db.cursor()
@@ -48,18 +48,25 @@ class NarutoOCViewLogic(commands.Cog):
 
         agility, taijutsu, endurance, perception, chakra_potency, available_points, total_points = stat_data
 
-
-
         # Create an embedded message to display the character sheet
-        embed = nextcord.Embed(title=f"{clan}, {name}", color=0x00ff00)
-        embed.set_im(url=oc_url)
-        embed.description
-        embed.add_field(name="Description", value=f"Name: {name}\nClan: {clan}\nAge: {age}\nGender: {gender}\n"
-                                                  f"Affinity: {elemental_affinity}", inline=False)
-        embed.add_field(name="Stats",
+        embed = nextcord.Embed(color=0x00ff00)
+        embed.set_image(url=oc_url)
+        embed.description = description = (
+            f"Name{'.' * (27 - len(name))}{name}\n"
+            f"Clan{'.' * (30 - len(clan))}{clan}\n"
+            f"Age{'.' * (30 - len(str(age)))}{age}\n"
+            f"Gender{'.' * (26 - len(gender))}{gender}\n"
+            f"Affinity{'.' * (26 - len(elemental_affinity))}{elemental_affinity}\n"
+        )
+        embed.add_field(name="Statistical Info",
                         value=f"Agility: {agility}\nTaijutsu: {taijutsu}\nEndurance: {endurance}\nPerception: "
                               f"{perception}\nPotency: {chakra_potency}\nSaved Points: {available_points}\n"
                               f"Point Total: {total_points}", inline=False)
+
+        if clan.lower() in ["null", "na"]:
+            embed.title = f"{name} — Original Character Sheet"
+        else:
+            embed.title = f"{clan}, {name} — Original Character Sheet"
 
         # Send the embedded message as an ephemeral message
         await interaction.send(embed=embed, ephemeral=True)
