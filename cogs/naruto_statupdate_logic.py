@@ -11,7 +11,7 @@ class StatUpdate(commands.Cog):
     @nextcord.slash_command(name='stat', description='Update your stats.')
     async def stat(self, interaction: nextcord.Interaction, action: str):
         if action == "update":
-            db = sqlite3.connect(f"database/serverid-{guild_id}_database.db")
+            db = sqlite3.connect(f"database/serverid-{interaction.guild.id}_database.db")
             cursor = db.cursor()
 
             cursor.execute("""
