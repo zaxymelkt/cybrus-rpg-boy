@@ -48,9 +48,12 @@ class NarutoOCViewLogic(commands.Cog):
 
         agility, taijutsu, endurance, perception, chakra_potency, available_points, total_points = stat_data
 
+
+
         # Create an embedded message to display the character sheet
-        embed = nextcord.Embed(title=f"{clan} (Leave blank if Na or Null), {name}", color=0x00ff00)
-        embed.set_thumbnail(url=oc_url)
+        embed = nextcord.Embed(title=f"{clan}, {name}", color=0x00ff00)
+        embed.set_im(url=oc_url)
+        embed.description
         embed.add_field(name="Description", value=f"Name: {name}\nClan: {clan}\nAge: {age}\nGender: {gender}\n"
                                                   f"Affinity: {elemental_affinity}", inline=False)
         embed.add_field(name="Stats",

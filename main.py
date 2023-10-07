@@ -1,4 +1,5 @@
 import base64
+import os
 
 import nextcord
 from nextcord.ext import commands
@@ -11,19 +12,19 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
-# Load the "NarutoBotJoin" cog
-bot.load_extension('cogs.naruto_bot_join')
-bot.load_extension('cogs.emote_function')
-bot.load_extension('cogs.naruto_character_edit_logic')
-bot.load_extension('cogs.naruto_whisper_logic')
-bot.load_extension('cogs.naruto_statupdate_logic')
 
 
 
+
+# Event handler for when the bot is ready
 @bot.event
 async def on_ready():
-    print(f'Logged in as {bot.user.name}')
-    print('it worked')
+    print(f"Logged in as {bot.user.name}")
 
+
+# Load your cogs here
+load_cogs()
+loaded_cogs = [filename[:-3] for filename in os.listdir('cogs') if filename.endswith('.py')]
+print(f'Loaded cogs: {", ".join(loaded_cogs)}')
 
 bot.run(config.BOT_TOKEN)
