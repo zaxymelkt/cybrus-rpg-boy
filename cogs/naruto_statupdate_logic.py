@@ -294,5 +294,6 @@ class StatView(nextcord.ui.View):
         db.commit()
         db.close()
 
+
 def setup(bot):
     bot.add_cog(StatUpdate(bot))

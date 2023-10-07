@@ -35,7 +35,7 @@ class NarutoOCViewLogic(commands.Cog):
 
         # Fetch data from 'statistical_info' table
         cursor.execute(
-            "SELECT agility, taijutsu, endurance, perception, chakra_potency, available_points, total_points "
+            "SELECT agility, taijutsu, endurance, perception, chakra_potency, available_points, total "
             "FROM statistical_info WHERE user_id = ?",
             (user_id,)
         )
