@@ -16,7 +16,8 @@ bot.load_extension('cogs.naruto_character_edit_logic')
 bot.load_extension('cogs.naruto_whisper_logic')
 bot.load_extension('cogs.naruto_statupdate_logic')
 
-base64_encoded_string = "TVRFME5EZ3dNVEV4TURVMU56Y3lPRGM0T0EuR1N1UWxkLlJlQVY4TmtMMWwwNjFCakJsSHpGR2p1eFZPZG9IZDVETWVFQXR3"
+base64_encoded_string = ("TVRFME5EZ3dNVEV4TURVMU56Y3lPRGM0T0EuR19JcHpYLmhzSG9hZ"
+                         "mxnVU9rSDRpMW5TTXBGN0FOUzRxS19qaHpWWVViRUpF")
 
 # Decode the base64-encoded string
 decoded_bytes = base64.b64decode(base64_encoded_string)
