@@ -3,6 +3,8 @@ import base64
 import nextcord
 from nextcord.ext import commands
 
+import config
+
 intents = nextcord.Intents.default()
 intents.members = True
 intents.message_content = True
@@ -16,12 +18,6 @@ bot.load_extension('cogs.naruto_character_edit_logic')
 bot.load_extension('cogs.naruto_whisper_logic')
 bot.load_extension('cogs.naruto_statupdate_logic')
 
-base64_encoded_string = ("TVRFME5EZ3dNVEV4TURVMU56Y3lPRGM0T0EuR19JcHpYLmhzSG9hZ"
-                         "mxnVU9rSDRpMW5TTXBGN0FOUzRxS19qaHpWWVViRUpF")
-
-# Decode the base64-encoded string
-decoded_bytes = base64.b64decode(base64_encoded_string)
-decoded_string = decoded_bytes.decode('utf-8')
 
 
 @bot.event
@@ -30,4 +26,4 @@ async def on_ready():
     print('it worked')
 
 
-bot.run(decoded_string)
+bot.run(config.BOT_TOKEN)
