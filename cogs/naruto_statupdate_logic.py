@@ -11,6 +11,20 @@ class StatUpdate(commands.Cog):
     @nextcord.slash_command(name='stat', description='Update your stats.')
     async def stat(self, interaction: nextcord.Interaction, action: str):
         if action == "update":
+            db = sqlite3.connect(f"database/serverid-{guild_id}_database.db")
+            cursor = db.cursor()
+
+            cursor.execute("""
+                            CREATE TABLE IF NOT EXISTS reward_logs (
+                                staff_id INTEGER,
+                                participants TEXT,
+                                point_rewards INTEGER,
+                                event_link TEXT
+                            )
+                            """)
+
+            db.commit()
+            db.close()
             await self.show_stat_menu(interaction)
 
     async def show_stat_menu(self, interaction):
@@ -92,37 +106,6 @@ class StatUpdate(commands.Cog):
 
             await interaction.send(f"Updated {user_id}'s points by {stat_point_total}. New total: {new_total}",
                                    ephemeral=True)
-
-    @commands.Cog.listener()
-    async def on_ready(self, interaction: Interaction):
-        # Get the list of guilds the bot is a member of
-        guilds = self.bot.guilds
-
-        # Assuming you want to access the first guild in the list (you can modify this as needed)
-        if guilds:
-            first_guild = guilds[0]  # You can choose the guild you want here
-            guild_id = first_guild.id
-            print(f"Bot is connected to guild with ID: {guild_id}")
-
-            # Connect to the database and create reward_logs table if it doesn't exist
-            db = sqlite3.connect(f"database/serverid-{guild_id}_database.db")
-            cursor = db.cursor()
-
-            cursor.execute("""
-                        CREATE TABLE IF NOT EXISTS reward_logs (
-                            staff_id INTEGER,
-                            participants TEXT,
-                            point_rewards INTEGER,
-                            event_link TEXT
-                        )
-                        """)
-
-            db.commit()
-            db.close()
-
-            # Now you can use guild_id in your database connection string or any other operations
-        else:
-            print("Bot is not a member of any guilds.")
 
 
 class StatUpdateView(nextcord.ui.View):
